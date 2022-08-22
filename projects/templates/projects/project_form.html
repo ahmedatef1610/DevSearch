@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+    {% comment %} 
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+
+            {% comments %} 
+                {% for field in form %}
+                    <div class="form-control {% if field.errors %}errors{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </div>
+                {% endfor %} 
+            {% endcomments %}
+
+            <input type="submit">
+        </form> 
+    {% endcomment %}
+
+
+    <!-- Main Section -->
+    <main class="formPage my-xl">
+        <div class="content-box">
+            <div class="formWrapper">
+
+                <a class="backButton" href="{% url 'projects' %}"><i class="im im-angle-left"></i></a>
+
+                <br>
+
+                <form class="form" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="form__field">
+                            {% comment %} <label for="formInput#text">{{ field.label }} </label> {% endcomment %}
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                    
+
+                    <div class="form__field">
+                        {% for tag in project.tags.all %}
+                            {% comment %} <div class="project-tag tag tag--pill tag--main">{{tag.name}} &#215;</div> {% endcomment %}
+                            <div class="project-tag tag tag--pill tag--sub tag--lg" data-tag="{{tag.id}}" data-project="{{project.id}}">{{tag.name}} &#215;</div>
+                        {% endfor %}
+                    </div>
+                    
+                    
+
+                    <div class="form__field">
+                        <label for="newtags">Tags</label>
+                        <textarea name="newtags" class="input input--text" id="newtags" placeholder="Add New Tags Here... (separate between them by space)"></textarea>
+                    </div> 
+
+                    {% comment %} 
+                        <!-- Input:Text -->
+                        <div class="form__field">
+                            <label for="formInput#text">Text Field: </label>
+                            <input class="input input--text" id="formInput#text" type="text" name="text" placeholder="Enter text" />
+                        </div> 
+                    {% endcomment %}
+
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+                </form>
+
+
+            </div>
+        </div>
+    </main>
+
+    {% csrf_token %}
+    {% comment %}
+        {% csrf_token %} <input type="hidden" name="csrfmiddlewaretoken" value="HIri8CdnS7QoBAbaT2Oapr9wlRu5v9wKHqhUPsFd2ea41xYHIHYBqSohmcViQiMP">
+        {{ csrf_token }} HIri8CdnS7QoBAbaT2Oapr9wlRu5v9wKHqhUPsFd2ea41xYHIHYBqSohmcViQiMP
+    {% endcomment %}
+
+{% endblock content %}
