@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-from os import getenv
+from os import getenv #, environ
 import environ
 from datetime import timedelta
 
@@ -20,17 +20,18 @@ from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
+# env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv("SECRET_KEY")
+SECRET_KEY = getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if getenv("IS_DEVELOPMENT") == 'False' else True 
+# DEBUG = False if getenv('IS_DEVELOPMENT') == 'False' else True 
+DEBUG = eval(getenv('IS_DEVELOPMENT'))
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', getenv("APP_HOST")]
 
@@ -216,7 +217,7 @@ MEDIA_URL = ""
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = getenv('EMAIL_HOST')
 EMAIL_PORT = getenv('EMAIL_PORT')
-EMAIL_USE_TLS = getenv('EMAIL_USE_TLS')
+EMAIL_USE_TLS = eval(getenv('EMAIL_USE_TLS'))
 EMAIL_HOST_USER = getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = getenv('EMAIL_HOST_PASSWORD')
 
@@ -227,8 +228,8 @@ AWS_ACCESS_KEY_ID = getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = getenv('AWS_S3_REGION_NAME')
-AWS_QUERYSTRING_AUTH = getenv('AWS_QUERYSTRING_AUTH')
-AWS_S3_FILE_OVERWRITE = getenv('AWS_S3_FILE_OVERWRITE')
+AWS_QUERYSTRING_AUTH = eval(getenv('AWS_QUERYSTRING_AUTH'))
+AWS_S3_FILE_OVERWRITE =  eval(getenv('AWS_S3_FILE_OVERWRITE'))
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage' # whitenoise make this
